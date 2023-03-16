@@ -44,19 +44,6 @@ const Todo = mongoose.model('Todo', todoSchema);
 async function run() {
 
     // define the routes for our API
-    app.get('/', (req, res) => {
-        Todo.find()
-            .then(todos => {
-                res.send(todos);
-            })
-            .catch(err => {
-                res.status(500).send({
-                    message: err.message || "Some error occurred while retrieving todos."
-                });
-            });
-    });
-
-    // define the routes for our API
     app.get('/api/todos', (req, res) => {
         Todo.find()
             .then(todos => {
