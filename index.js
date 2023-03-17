@@ -4,7 +4,6 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const { ObjectId } = require('mongodb');
 const { MongoClient, ServerApiVersion } = require('mongodb');
-
 const app = express();
 
 // parse requests of content-type - application/x-www-form-urlencoded
@@ -16,39 +15,17 @@ app.use(bodyParser.json());
 // enable CORS
 app.use(cors());
 
+// start the server
+const PORT = process.env.PORT || 4000;
+
 // connect to the database
 
-const uri = "mongodb+srv://sagardey:sagardey@cluster0.rpaesbl.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://sagardey:hZ1Ex7yjd8WJKkOP@cluster0.rpaesbl.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 client.connect().then(() => {
     console.log("conneted with db");
 })
 
-
-// mongoose.connect('mongodb+srv://sagardey:sagardey@cluster0.rpaesbl.mongodb.net/?retryWrites=true&w=majority', {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true
-// }).then(() => {
-//     console.log("Connected to the database!");
-// }).catch(err => {
-//     console.log("Cannot connect to the database!", err);
-//     process.exit();
-// });
-
-// define a simple schema for our Todo model
-const todoSchema = mongoose.Schema({
-    projectname: String,
-    taskname: String,
-    taskdescription: String,
-    acceptancecriteria: String,
-    deadline: Date,
-    assigne: String,
-}, {
-    timestamps: true
-});
-
-// create a Todo model from the schema
-const Todo = mongoose.model('Todo', todoSchema);
 
 async function run() {
     try {
@@ -117,8 +94,10 @@ async function run() {
 
 run();
 
-// start the server
-const PORT = process.env.PORT || 4000;
+app.get('/', (req, res) => {
+    res.send('Vercel Wrking nicely')
+})
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });
